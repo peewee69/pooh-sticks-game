@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Pooh Sticks Game</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    
+    <link href="Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="Content/superslides.css" rel="stylesheet" />
+    <link href="Content/pooh-sticks-styles.css" rel="stylesheet" />
+
+    <script src="Content/scripts/pooh-sticks-main.js"></script>
+    <script src="Content/scripts/pooh-sticks-data-points.js"></script>
+    <script src="Scripts/jquery-2.1.0.min.js"></script>
+    <script src="Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="Scripts/jquery.easing.1.3.js"></script>
+    <script src="Scripts/jquery.animate-enhanced.min.js"></script>
+    <script src="Scripts/jquery.superslides.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.slides-navigation .prev').hide();
+
+            $('.slides-navigation .new').on('click',
+            function(){
+                window.PoohSticks.Attempts = 0,
+                $('#background-video').fadeIn(1000);
+                $('#slides').superslides('animate', 0);
+
+                $('.slides-navigation a').hide();
+                $('.slides-navigation .next').show();
+
+                $('#outcome-video').hide();
+                window.PoohSticks.ResetValues();
+            });
+			
+            $('.slides-navigation .help').on('click', function () {
+                $('#background-video').fadeIn(1000);
+                $('#slides').superslides('animate', 'help');
+
+                $('.slides-navigation a').hide();
+                $('.slides-navigation .re-try').show();
+
+                $('#outcome-video').hide();
+                window.PoohSticks.ResetValues();
+            });
+
+            $('.slides-navigation .re-try').on('click', function () {
+                $('#background-video').fadeIn(1000);
+                $('#slides').superslides('animate', 'slider-select');
+
+                $('.slides-navigation a').hide();
+                $('.slides-navigation .next').show();
+                $('.slides-navigation .prev').show();
+
+                $('#outcome-video').hide();
+                window.PoohSticks.ResetValues();
+            });
+
+            $('#slides').superslides({
+                animation: 'slide',
+                animation_speed: 600,
+                hashchange: false,
+                pagination: false
+            })
+            .bind('init.slides', function (e) {
+
+            })
+            .bind('animating.slides', function (e) {
+                var $current = $(this).superslides('$current');
+
+                if ($current.attr('id') == 'slider-select') {
+                    // Hide controls
+                    $('.slides-navigation a').hide();
+
+                    // Fade background video
+                    $('#background-video').fadeOut(1000);
+
+                    //Blank out content
+                    $('#outcome-panel').hide();
+
+                    window.PoohSticks.Values = {
+                        gradient: $('#gradient').slider("value"),
+                        discharge: $('#discharge').slider("value"),
+                        sedimentload: $('#sedimentload').slider("value")
+                    }
+                }
+            })
+            .bind('animated.slides', function (e) {
+                var $current = $(this).superslides('$current');
+
+                if ($current.attr('id') !== 'game-results' && $current.attr('id') !== 'help') {
+                    $('.next').show();
+                } else {
+                    $('.next').hide();
+                }
+
+                if ($current.attr('id') !== 'spalsh-screen' && $current.attr('id') !== 'game-results') {
+                    $('.prev').show();
+                } else {
+                    $('.prev').hide();
+                }
+
+                if ($current.attr('id') == 'game-results') {
+                    window.PoohSticks.RunEndSequence($(this).superslides('$current'));
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+  <video id="background-video" autoplay="autoplay" loop="loop" name="Background Loop" src="Content/videos/ui-loop.mov"></video>
+  <div id="slides">
+    <div class="slides-container">
+      <div id="spalsh-screen">
+          <h1>Virtual ‘Pooh sticks’</h1>
+      </div>
+      <div id="background">
+          <h1>Background</h1>
+          <div class="text-panel">
+              <p>
+Pooh sticks – described in the Winnie-the-Pooh book (Milne) is a simple sport played on a bridge over running water; each player drops a stick on the upstream side of a bridge and the one whose stick first appears on the downstream side is the winner!
+              </p>
+              <p>
+You are invited to play God and design the ultimate river to improve your chances winning a game of virtual pooh sticks
+but do you know how to do it?
+              </p>
+			</div>
+			<div class="image-panel">
+					<div class="image-1">
+					</div>
+					<div class="image-2">
+					</div>
+					<div class="image-3">
+					</div>
+			</div>
+      </div>
+      <div id="mission">
+          <h1>Background</h1>
+          <div class="text-panel">
+              <p>
+                There are many different river types e.g., meandering, braided, anastomosing etc these forms are controlled by 3 main variables;
+              </p>
+			  <ul>
+				<li><strong>Gradient</strong> – the steepness of the slope</li>
+				<li><strong>Discharge</strong>  –  amount of water flowing down the stream</li>
+				<li><strong>Sediment load</strong>  – the size and amount of the particles in the river from fine clays and silts to sand and pebbles and boulders</li>
+			  </ul>
+              <p>
+                The relationships between the variables are explained by Lanes Balance:
+              </p>
+			  <ul>
+				<li>If the discharge increases– then the gradient increases as the river degrades (erodes) its channel </li>
+				<li>If the sediment load increases – then there is aggradation (deposition) in its channel and/or floodplain, which changes the gradient of the river</li>
+				<li>If the grain size becomes much coarser degradation may change to aggradation</li>
+			  </ul>
+			  <p>
+			  This delicate balance of erosion and deposition creates different river types – but which river type will make your Pooh stick travel the fastest?
+			</p>
+          </div>
+      </div>
+      <div id="mission">
+          <h1>Lane's Diagram</h1>
+          <div class="image-panel">
+					<div class="lanes-scale">
+					</div>
+          </div>
+
+      </div>
+      <div id="slider-select">
+          <h1>Select your parameters</h1>
+
+          <div class="slider-panel">
+              <div class="slider-row">
+                  <div class="slider-label">Gradient</div>
+                  <div class="slider" id="gradient"></div>
+                  <div class="slider-extremities">
+                      <div class="slider-min">Flat</div>
+                      <div class="slider-max">Steep</div>
+                  </div>
+              </div>
+
+              <div class="slider-row">
+                  <div class="slider-label">Discharge</div>
+                  <div class="slider" id="discharge"></div>
+                  <div class="slider-extremities">
+                      <div class="slider-min">Low</div>
+                      <div class="slider-max">High</div>
+                  </div>
+              </div>
+
+              <div class="slider-row">
+                  <div class="slider-label">Sediment load</div>
+                  <div class="slider" id="sedimentload"></div>
+                  <div class="slider-extremities">
+                      <div class="slider-min">Fine</div>
+                      <div class="slider-max">Coarse</div>
+                  </div>
+              </div>
+          </div>
+            <script type="text/javascript">
+                $(function () {
+                    var $slidervalue = $('<div class="slider-value"></div>');
+                    var updateVal = function (event, ui) {
+                        $(this).find(".ui-slider-handle").append($slidervalue.text(ui.value));
+                    };
+
+                    var defaultSliderConfig = {
+                        range: false,
+                        start: updateVal,
+                        create: updateVal,
+                        slide: updateVal
+                    };
+
+                    var gradientSliderConfig = {
+                        min: 1,
+                        max: 10,
+                        step: 1,
+                        value: 1
+                    };
+
+                    var dischargeSliderConfig = {
+                        min: 1,
+                        max: 10,
+                        step: 1,
+                        value: 1
+                    };
+
+                    var sedimetnloadSliderConfig = {
+                        min: 1,
+                        max: 10,
+                        step: 1,
+                        value: 1
+                    };
+
+                    $(".slider#gradient").slider($.extend(defaultSliderConfig, gradientSliderConfig));
+
+                    $(".slider#discharge").slider($.extend(defaultSliderConfig, dischargeSliderConfig));
+
+                    $(".slider#sedimentload").slider($.extend(defaultSliderConfig, sedimetnloadSliderConfig));
+                });
+            </script>
+      </div>
+      <div id="game-results">
+          <video id="outcome-video" name="" ></video>
+          <div id="outcome-panel">
+              <h1>You created <span id="outcome-title"></span></h1>
+
+              <div class="text-panel-outcome">
+                  <table id="result-table">
+                      <thead>
+                          <tr>
+                              <th colspan="5">Low Energy</th>
+                              <th colspan="5">High Energy</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td id="one"><div id="result-pointer"></div></td>
+                              <td id="two"></td>
+                              <td id="three"></td>
+                              <td id="four"></td>
+                              <td id="five"></td>
+                              <td id="six"></td>
+                              <td id="seven"></td>
+						      <td id="eight"></td>
+							  <td id="nine"></td>
+							  <td id="ten"></td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <img id="outcome-image" class="preserve" />
+                  <span id="outcome-html"></span>
+              </div>
+			  
+              <div class="text-panel-outcome">
+                  <img id="outcome-image" class="preserve" />
+                  <span id="outcome-html"></span>
+              </div>
+          </div>
+      </div>
+      <div id="help">
+          <div>
+			<h1>Help</h1>
+			<div class="image-panel">
+					<div class="help-image">
+					</div>
+				</div>
+		  </div>
+		</div>
+	</div>
+
+    <nav class="slides-navigation">
+      <a href="#" class="next">Next &gt;&gt;</a>
+      <a href="#" style="display:none;" class="prev">&lt;&lt; Back</a>
+      <a href="#" style="display:none;" class="re-try">&lt;&lt; Try Again</a>
+      <a href="#" style="display:none;" class="new">New Game</a>
+	  <a href="#" style="display:none;" class="help">Help</a>
+    </nav>
+  </div>
+
+</body>
+</html>
+
