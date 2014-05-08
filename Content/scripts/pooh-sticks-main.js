@@ -1,7 +1,7 @@
 ﻿window.PoohSticks = {
     Config: {
         OutcomeFadeInStart: 4,
-		MinRetrysForHelp: 4
+		MinRetrysForHelp: 3
     },
 	WinningOutcome: 'MeanderingChannelWithCutOffs',
     Attempts: 0,
