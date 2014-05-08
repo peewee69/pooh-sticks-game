@@ -33,9 +33,14 @@
 .slides-navigation a:hover {
     background-color: powderblue;
     border:black solid 4px;
+	text-shadow: -1px 1px 8px #666, 1px -1px 8px #000;
+	color: #FFF;
+	transition: 150ms linear 0s;
+	outline: 0 none;
 }
 
 .slides-navigation a {
+    border:black solid 2px;
     color: black;
     font-size: 3rem;
     font-weight: bold;

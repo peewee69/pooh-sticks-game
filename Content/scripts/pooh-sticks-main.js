@@ -37,7 +37,7 @@
 			time: '15:00'
         },
         {
-            id: 'CoarseGrainerMeanderingRiver',
+            id: 'CoarseGrainedMeanderingRiver',
             title: 'a coarse grained meandering river',
             html: '<p>Your stick was fast with no in-channel bars to obstruct its progress but was slightly slowed by the number and size of meanders – try to reduce the number of meanders by increasing its energy?</p>',
 			time: '10:00'
