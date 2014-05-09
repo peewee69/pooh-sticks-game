@@ -96,6 +96,7 @@
         window.PoohSticks.Attempts++;
 
         $content.hide();
+		$content.find('.digi-clock').text(outcome.time);
         $content.find('#outcome-image').prop('src', './Content/images/outcomes/' + outcome.id + '.png');
         $content.find('#outcome-title').text(outcome.title);
         $content.find('#outcome-html').html(outcome.html.replace('{0}', window.PoohSticks.Attempts.toString() + (window.PoohSticks.Attempts > 1 ? ' attempts' : ' attempt')));
@@ -108,6 +109,27 @@
         $video.on('ended', function () {
             $content.show();
         });
+		
+	
+	// DELETE!!!!
+
+		$('.slides-navigation a').hide();
+
+		if (outcome.id == window.PoohSticks.WinningOutcome) {
+			$('.slides-navigation .new').show();
+		}
+		else {
+			$('.slides-navigation .re-try').show();
+			
+			if(
+				window.PoohSticks.Attempts >= window.PoohSticks.Config.MinRetrysForHelp
+			)
+			{
+				$('.slides-navigation .help').show();
+			}
+		}
+$content.show();
+	// DELETE!!!
 
         $video.show();
         $video[0].play();
