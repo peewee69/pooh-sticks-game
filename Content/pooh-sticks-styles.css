@@ -219,14 +219,16 @@ a.ui-slider-handle {
 }
 
 .text-panel-outcome {
-    padding: 2rem 5rem;
-    font-family: Arial;
-    font-size: 2.5rem;
-    width: 38%;
-    margin:auto;
+	float: right;
+	padding: 2rem 5rem;
+	font-family: Arial;
+	font-size: 2.5rem;
+	width: 34%;
+	margin: auto;
 	background-color: rgba(0, 0, 0, 0.65);
 	box-shadow: 1rem 1rem 0.5rem #888888;
 	border-radius: 1rem;
+	margin-right: 4rem;
 }
 
 /* Pooh sticks */
